@@ -7,6 +7,7 @@ import (
 	"github.com/eugene-fedorenko/ring"
 	"github.com/valyala/fasthttp"
 	"os"
+	"strings"
 	"time"
 )
 
@@ -37,7 +38,7 @@ func main() {
 	scanner := bufio.NewScanner(file)
 	var dataset []string
 	for i := 0; scanner.Scan(); i++ {
-		uid := string(scanner.Bytes())
+		uid := strings.TrimSpace(string(scanner.Bytes()))
 		dataset = append(dataset, uid)
 
 	}
