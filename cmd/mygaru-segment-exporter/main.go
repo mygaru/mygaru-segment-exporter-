@@ -35,9 +35,9 @@ func main() {
 
 	fmt.Printf("reading file: %q", file.Name())
 	scanner := bufio.NewScanner(file)
-	var dataset [][]byte
+	var dataset []string
 	for i := 0; scanner.Scan(); i++ {
-		uid := scanner.Bytes()
+		uid := string(scanner.Bytes())
 		dataset = append(dataset, uid)
 
 	}
@@ -48,7 +48,7 @@ func main() {
 	// create bloom filter with capacity usersTotal + 20%
 	bloom, _ := ring.Init(int(float64(len(dataset))*1.2), 0.001)
 	for i := 0; i < len(dataset); i++ {
-		bloom.Add(dataset[i])
+		bloom.Add([]byte(dataset[i]))
 	}
 
 	bloomBinFormat, err := bloom.MarshalBinary()
